@@ -2,11 +2,11 @@
 How to convert module to "class"
 
 ## Stage 0
-```fortran
+```f90
 module bigmod
-  # module vars that remain constant after initial assignment
+  ! module vars that remain constant after initial assignment
   real, save:: a, b, c ! or PARAMETER
-  # module vars that are changed by the subroutines below
+  ! module vars that are changed by the subroutines below
   real, save:: x, y, z
 contains
   ! Read-only-use a, b, c, . . .

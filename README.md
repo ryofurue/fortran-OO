@@ -1,14 +1,15 @@
 # fortran-OO
 How to convert module to "class"
 
-## This is test.
+## Stage 0
+```fortran
     module bigmod
        a, b, c, . . .
        x, y, z, . . .
     contains
         func1() . . . “reads” some of a, b, c, . . .; “modifies” some of x, y, z, . ..
         func2() . . . Ditto.
-
+```
 Step 1
     module bigmod
        a, b, c, . . .

@@ -58,7 +58,8 @@ program main
 ```
 ## Stage 2 (final, OO style)
 ```f90
-module bigmod  real, save:: a, b, c
+module bigmod
+  real, save:: a, b, c
   ! abolish module-global x, y, z
   type instancevars
     x, y, z

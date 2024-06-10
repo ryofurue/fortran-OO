@@ -12,11 +12,9 @@ contains
   ! Read-only-use a, b, c, . . .
   ! Update x, y, z, . . .
   subroutine func1()
-    ! . . .
-  end subroutine func1
+    . . .
   subroutine func2()
-    ! . . .
-  end subroutine
+    . . .
 ```
 ## Step 1
 ```fortran

@@ -19,17 +19,17 @@ contains
 ## Step 1
 ```fortran
 module bigmod
-       a, b, c, . . .
-       x, y, z, . . .
-       type global
-          x, y, z, . . .
-       end type global
-    contains
-        set_global(self::global)
-           x = self.x
-           y = self.y
-           . . .
-        get_global(self::global)
+  real, save:: a, b, c
+  real, save:: x, y, z
+  type instancevars
+    x, y, z
+    . . .
+contains
+subroutine set_global(self::instancevars)
+  x = self.x
+  y = self.y
+  . . .
+subroutine get_global(self::global)
            self.x = x
            self.y = y
            . . .

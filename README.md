@@ -56,7 +56,7 @@ program main
   call func3() ! old-style function.
   . . .
 ```
-## Step 2 (final, OO style)
+## Stage 2 (final, OO style)
 ```fortran
 module bigmod
   real, save:: a, b, c

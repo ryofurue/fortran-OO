@@ -16,7 +16,7 @@ contains
   subroutine func2()
     . . .
 ```
-## Step 1
+## Stage 1
 ```fortran
 module bigmod
   real, save:: a, b, c
@@ -25,46 +25,67 @@ module bigmod
     x, y, z
     . . .
 contains
-subroutine set_global(self::instancevars)
-  x = self.x
-  y = self.y
+  ! determine a, b, c, . . . x, y, z, . . .
+  subroutine init_bigmod()
+    . . .
+  subroutine set_instancevars(self::instancevars)
+    x = self.x
+    y = self.y
+    . . .
+  subroutine get_instancevars(self::instancevars)
+    self.x = x
+    self.y = y
   . . .
-subroutine get_global(self::global)
-           self.x = x
-           self.y = y
-           . . .
-        func1(self) . . . reads some of a, b, c, . . . ; doesn’t refer to the module x, y, z, . . .
-           uses selfl.x, self.y, . . .
-        func2(self) . . . Ditto
-        func3() . . . unmodified from Step 0.
+  ! Read-only-use a, b, c, . . .
+  ! Don't refer to the module-global x, y, z, . . .
+  subroutine func1(self)
+    !. . . use self.x, self.y, . . .
+  subroutine func2(self)
+    . . .
+  subroutine func3() ! Not yet updated. Modifies x, y, z, . . .
+  . . .
 
-    main
-       type(global):: obj
-       call get_global(obj)
-       call func1(obj)
-       call func2(obj) ! just inherit obj
-       call set_global(obj) ! need to copy back for the old-style function
-       call func3() ! old-style function.
+program main
+  use bigmod
+  type(instancevars):: obj
+  call init_bigmod()
+  call get_instancvars(obj)
+  call func1(obj)
+  call func2(obj) ! just inherit obj
+  call set_instancevars(obj) ! need to copy back for the next func
+  call func3() ! old-style function.
+  . . .
 ```
-Step 2 (final, OO style)
-    module bigmod
-       a, b, c, . . .
-       ! delete x, y, z, . . . as module-global
-       type global
-          x, y, z, . . .
-    contains
-        new_state(self) . . . creates a “global” object
-        func1(self)
-        func2(self)
-        func3(self)
-
-
-   main
-      type(global):: obj  ! mutable state of the module
-      call new_global(obj) ! creates new state
-      call func1(obj)
-      call func2(obj)
-      call func3(obj)
-      . . . 
-
-
+## Step 2 (final, OO style)
+```fortran
+module bigmod
+  real, save:: a, b, c
+  ! abolish module-global x, y, z
+  type instancevars
+    x, y, z
+    . . .
+contains
+  ! determine a, b, c, . . .
+  subroutine init_bigmod()
+    . . .
+  subroutine new_instancevars(self::instancevars)
+    self.x = . . .
+    self.y = . . .
+    . . .
+  subroutine func1(self)
+    !. . . use self.x, self.y, . . .
+  subroutine func2(self)
+    . . .
+  subroutine func3(self)
+    . . .
+  . . .
+program main
+  use bigmod
+  type(instancevars):: obj
+  call init_bigmod()
+  call new_instancvars(obj)
+  call func1(obj)
+  call func2(obj) ! inherits obj
+  call func3(obj) ! inherits obj
+  . . .
+```

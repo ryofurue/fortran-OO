@@ -9,6 +9,9 @@ module bigmod
   ! module vars that are changed by the subroutines below
   real, save:: x, y, z
 contains
+  ! determine a, b, c, . . . x, y, z, . . .
+  subroutine init_bigmod()
+    . . .
   ! Read-only-use a, b, c, . . .
   ! Update x, y, z, . . .
   subroutine func1()
@@ -25,7 +28,6 @@ module bigmod
     x, y, z
     . . .
 contains
-  ! determine a, b, c, . . . x, y, z, . . .
   subroutine init_bigmod()
     . . .
   subroutine set_instancevars(self::instancevars)

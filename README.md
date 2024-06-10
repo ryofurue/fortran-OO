@@ -4,15 +4,19 @@ How to convert module to "class"
 ## Stage 0
 ```fortran
 module bigmod
-  ! module vars that aren't altered after initial assignment
-    a, b, c, . . .
+  ! module vars that remain constant after initial assignment
+  real, save:: a, b, c ! or PARAMETER
   ! module vars that are changed by the subroutines below
-       x, y, z, . . .
+  real, save:: x, y, z
 contains
   ! Read-only-use a, b, c, . . .
   ! Update x, y, z, . . .
-  subroutine func1() . . .
-  subroutine func2() . . .
+  subroutine func1()
+    ! . . .
+  end subroutine func1
+  subroutine func2()
+    ! . . .
+  end subroutine
 ```
 ## Step 1
 ```fortran

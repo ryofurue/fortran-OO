@@ -3,15 +3,20 @@ How to convert module to "class"
 
 ## Stage 0
 ```fortran
-    module bigmod
-       a, b, c, . . .
+module bigmod
+  ! module vars that aren't altered after initial assignment
+    a, b, c, . . .
+  ! module vars that are changed by the subroutines below
        x, y, z, . . .
-    contains
-        func1() . . . “reads” some of a, b, c, . . .; “modifies” some of x, y, z, . ..
-        func2() . . . Ditto.
+contains
+  ! Read-only-use a, b, c, . . .
+  ! Update x, y, z, . . .
+  subroutine func1() . . .
+  subroutine func2() . . .
 ```
-Step 1
-    module bigmod
+## Step 1
+```fortran
+module bigmod
        a, b, c, . . .
        x, y, z, . . .
        type global
@@ -38,7 +43,7 @@ Step 1
        call func2(obj) ! just inherit obj
        call set_global(obj) ! need to copy back for the old-style function
        call func3() ! old-style function.
-
+```
 Step 2 (final, OO style)
     module bigmod
        a, b, c, . . .

@@ -1,5 +1,5 @@
 # fortran-OO
-How to convert module to "class"
+How to convert a module to a "class"?
 
 ## Stage 0
 ```f90
@@ -16,7 +16,7 @@ contains
   subroutine func2()
     . . .
 ```
-## Stage 1
+## Stage 1: Transition
 ```f90
 module bigmod
   real, save:: a, b, c
@@ -56,7 +56,7 @@ program main
   call func3() ! old-style function.
   . . .
 ```
-## Stage 2 (final, OO style)
+## Stage 2: Final, OO-style
 ```f90
 module bigmod
   real, save:: a, b, c

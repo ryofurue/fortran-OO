@@ -17,7 +17,7 @@ contains
     . . .
 ```
 ## Stage 1
-```fortran
+```f90
 module bigmod
   real, save:: a, b, c
   real, save:: x, y, z
@@ -57,9 +57,8 @@ program main
   . . .
 ```
 ## Stage 2 (final, OO style)
-```fortran
-module bigmod
-  real, save:: a, b, c
+```f90
+module bigmod  real, save:: a, b, c
   ! abolish module-global x, y, z
   type instancevars
     x, y, z

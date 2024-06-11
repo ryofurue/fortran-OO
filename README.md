@@ -18,6 +18,8 @@ contains
     . . .
   subroutine func2()
     . . .
+  subroutine sub()
+    use x only
 ```
 ## Stage 1: Transition
 ```f90
@@ -45,8 +47,11 @@ contains
   subroutine func2(self)
     . . .
   subroutine func3() ! Not yet updated. Modifies x, y, z, . . .
-  . . .
-
+    . . .
+  ! Don't modify module-global x, y, z, . . .
+  subroutine sub(segs, xs, ys, zs)
+    foreach (i=1:imax) xs(i) = segs(i).x
+    . . .
 program main
   use bigmod
   type(instancevars):: obj
@@ -80,6 +85,7 @@ contains
     . . .
   subroutine func3(self)
     . . .
+  subroutine sub(segs, xs, ys, zs)
   . . .
 program main
   use bigmod

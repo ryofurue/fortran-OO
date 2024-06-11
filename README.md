@@ -18,8 +18,10 @@ contains
     . . .
   subroutine func2()
     . . .
+  ! Read-only-use a, b, c, . . .
+  ! Update x only.
   subroutine sub()
-    use x only
+    . . .
 ```
 ## Stage 1: Transition
 ```f90
@@ -48,9 +50,9 @@ contains
     . . .
   subroutine func3() ! Not yet updated. Modifies x, y, z, . . .
     . . .
-  ! Don't modify module-global x, y, z, . . .
-  subroutine sub(segs, xs, ys, zs)
-    foreach (i=1:imax) xs(i) = segs(i).x
+  ! Modify x
+  subroutine sub(x)
+    x = . . .
     . . .
 program main
   use bigmod
@@ -85,7 +87,7 @@ contains
     . . .
   subroutine func3(self)
     . . .
-  subroutine sub(segs, xs, ys, zs)
+  subroutine sub(x)
   . . .
 program main
   use bigmod

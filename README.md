@@ -61,6 +61,7 @@ program main
   call get_instancvars(obj)
   call func1(obj)
   call func2(obj) ! just inherit obj
+  call sub(obj.x)
   call set_instancevars(obj) ! need to copy back for the next func
   call func3() ! old-style function.
   . . .
@@ -96,6 +97,7 @@ program main
   call new_instancvars(obj)
   call func1(obj)
   call func2(obj) ! inherits obj
+  call sub(obj.x) ! inherits obj, updates only obj.x
   call func3(obj) ! inherits obj
   . . .
 ```
